@@ -26,6 +26,13 @@ window.AppData = new Proxy(defaultData, {
   }
 });
 
+window.pendingCommands = [];
+
+window.resetCommands = function() {
+  // setting this from the addon seems to create an obj, not an array
+  window.pendingCommands = [];
+};
+
 function renderApp() {
   ReactDOM.render(React.createElement(AppView, window.AppData),
                   document.getElementById('container'));
