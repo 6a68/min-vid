@@ -266,7 +266,7 @@ module.exports = React.createClass({
         <div className='video-wrapper' onMouseEnter={this.enterPlayer}
              onMouseLeave={this.leavePlayer} onClick={this.handleVideoClick}>
 
-          <div className={cn('controls', {hidden: !this.state.hovered, minimized: this.props.minimized})}
+          <div className={cn('controls', 'drag', {hidden: !this.state.hovered, minimized: this.props.minimized})}
                onMouseEnter={this.enterControls} onMouseLeave={this.leaveControls}>
             <div className='left'>
               <a onClick={this.play} data-tip data-for='play'
