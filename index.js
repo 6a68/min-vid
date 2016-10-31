@@ -8,6 +8,7 @@ const pageMod = require('sdk/page-mod');
 
 const getYouTubeUrl = require('./lib/get-youtube-url');
 const getVimeoUrl = require('./lib/get-vimeo-url');
+// const getSoundcloudUrl = require('./lib/get-soundcloud-url');
 const launchVideo = require('./lib/launch-video');
 const sendMetricsData = require('./lib/send-metrics-data');
 const contextMenuHandlers = require('./lib/context-menu-handlers');
@@ -39,8 +40,17 @@ exports.main = function() {
             domain: opts.domain
           });
           launchVideo(opts);
-        }
+        }//  else if (opts.domain.indexOf('soundcloud.com')  > -1) {
+        //   opts.getUrlFn = getSoundcloudUrl;
+        //   sendMetricsData({
+        //     object: 'overlay_icon',
+        //     method: 'launch',
+        //     domain: opts.domain
+        //   });
+        //   launchVideo(opts);
+        // }
       });
+
       worker.port.on('metric', sendMetricsData);
     }
   });

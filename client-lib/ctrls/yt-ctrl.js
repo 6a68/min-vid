@@ -1,0 +1,60 @@
+module.exports = class YouTubeCtrl {
+  constructor(options) {
+    if (!window.YT) return options.onError('window.YT not yet initialized');
+
+    window.YTPlayer = new window.YT.Player(options.id, {
+      events: {
+        onReady: options.onReady,
+        onError: options.onError,
+        onStateChange: options.onStateChange
+      }
+    });
+  }
+
+  set volume(v) {
+    window.YTPlayer.setVolume(v * 100);
+  }
+
+  get volume() {
+    return window.YTPlayer.getVolume();
+  }
+
+  get time() {
+    return window.YTPlayer.getCurrentTime();
+  }
+
+  set time(seconds) {
+    window.YTPlayer.seekTo(seconds, true);
+  }
+
+  get duration() {
+    // #184 getDuration always seems to round up
+    // whereas the player on YouTube always has
+    // the float. This causes our ui to appear
+    // as if it exits one second early.
+    const dur = window.YTPlayer.getDuration();
+    if (dur > 1) {
+      return dur - 1;
+    } else return dur;
+  }
+
+  play() {
+    window.YTPlayer.playVideo();
+  }
+
+  pause() {
+    window.YTPlayer.pauseVideo();
+  }
+
+  mute() {
+    window.YTPlayer.mute();
+  }
+
+  unmute() {
+    window.YTPlayer.unMute();
+  }
+
+  remove() {
+    window.YTPlayer = null;
+  }
+}

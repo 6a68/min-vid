@@ -26,7 +26,7 @@
     "watch-script": "cross-env NODE_ENV=development watchify app.js -o data/bundle.js -t [ babelify --presets [ react ] ]",
     "start": "npm run dev",
     "watch": "jpm watchpost --post-url http://localhost:8888",
-    "dev": "npm run locales && npm run watch-script & npm run watch & http-server -c-1",
+    "dev": "npm run locales && npm run watch-script & npm run watch & http-server -c-1 --cors",
     "prepackage": "npm run locales && npm run lint",
     "package": "npm run build-script && jpm xpi && npm run mv-xpi",
     "postpackage": "addons-linter addon.xpi -o text",
@@ -41,6 +41,8 @@
   },
   "devDependencies": {
     "addons-linter": "0.15.3",
+    "audio-fft": "0.1.3",
+    "audiosource": "2.0.5",
     "babel": "6.5.2",
     "babel-preset-react": "6.11.1",
     "babelify": "7.3.0",

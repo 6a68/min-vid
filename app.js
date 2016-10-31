@@ -2,22 +2,12 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const AppView = require('./components/app-view');
 
-const defaultData = {
-  id: '',
-  src: '',
-  url: '', // only used for <audio> and <video> tags
-  domain: '',
-  minimized: false,
-  loaded: false,
-  error: false,
-  muted: false,
-  currentTime: '0:00 / 0:00',
-  duration: 0,
-  progress: 0.001, // force progress element to start out empty
-  playing: false,
-  volume: '0.5',
-  strings: {}
-};
+const emitter = require('./client-lib/emitter.js');
+
+// global listeners
+require('./client-lib/nsa');
+
+const defaultData = require('./client-lib/defaults');
 
 window.AppData = new Proxy(defaultData, {
   set: function(obj, prop, value) {
@@ -28,10 +18,21 @@ window.AppData = new Proxy(defaultData, {
         window.console.error('Unable to parse l10n strings: ', ex);
       }
     } else obj[prop] = value;
+
+    // if (prop === 'src' && obj.player) {
+    //   emitter.emit('reset');
+    // }
     renderApp();
     return true;
   }
 });
+
+window.onresize = () => {
+  emitter.emit('resize', {
+    width: window.AppData.width = document.body.clientWidth,
+    height: window.AppData.height = document.body.clientHeight
+  });
+};
 
 window.pendingCommands = [];
 

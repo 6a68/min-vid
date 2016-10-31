@@ -14,7 +14,8 @@ self.port.on('set-video', opts => {
   opts = Object.assign(opts, {
     loaded: false,
     progress: 0,
-    playing: false
+    playing: false,
+    player: 'bullocks'
   });
   unsafeWindow.AppData = deepAssign(unsafeWindow.AppData, opts);
 });
