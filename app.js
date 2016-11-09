@@ -20,7 +20,13 @@ const defaultData = {
 
 window.AppData = new Proxy(defaultData, {
   set: function(obj, prop, value) {
-    obj[prop] = value;
+    if (prop === 'strings') {
+      try {
+        obj[prop] = JSON.parse(value);
+      } catch (ex) {
+        window.console.error('Unable to parse l10n strings: ', ex);
+      }
+    } else obj[prop] = value;
     renderApp();
     return true;
   }
