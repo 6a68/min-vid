@@ -48,7 +48,7 @@ exports.main = function() {
   contextMenuHandlers.init(windowUtils.getWindow());
 };
 exports.onUnload = function(reason) {
-  windowUtils.destroy();
+  windowUtils.destroy(true);
   contextMenuHandlers.destroy();
   launchIconsMod.destroy();
 };
